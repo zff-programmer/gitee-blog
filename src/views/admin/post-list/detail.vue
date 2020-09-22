@@ -1,33 +1,51 @@
 <template>
   <div>
     <div class="btns">
-      <router-link to='/admin/list' style="margin-right:10px;">
-        <el-button type="info" icon="el-icon-close" plain>退出
+      <router-link to='/admin/list'
+                   style="margin-right:10px;">
+        <el-button type="info"
+                   icon="el-icon-close"
+                   plain>退出
         </el-button>
       </router-link>
-      <el-button v-if="action == 'edit' || action == 'add'" type="primary" icon="el-icon-finished" plain @click="savePost">保存</el-button>
+      <el-button v-if="action == 'edit' || action == 'add'"
+                 type="primary"
+                 icon="el-icon-finished"
+                 plain
+                 @click="savePost">保存</el-button>
     </div>
-    <el-form ref="postForm" label-width="50px" label-position="left">
+    <el-form ref="postForm"
+             label-width="50px"
+             label-position="left">
       <el-row class="form-row">
         <el-col :span="5">
           <el-form-item label="标题">
-            <el-input v-model="name" placeholder="文章标题"></el-input>
+            <el-input v-model="name"
+                      placeholder="文章标题"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="4" :offset="1">
+        <el-col :span="4"
+                :offset="1">
           <el-form-item label="分类">
-            <el-select v-model="category" placeholder="文章类型">
-              <el-option :label="item" :value="item" v-for="item in categories" :key="item"></el-option>
+            <el-select v-model="category"
+                       placeholder="文章类型">
+              <el-option :label="item"
+                         :value="item"
+                         v-for="item in categories"
+                         :key="item"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="13" :offset="1">
+        <el-col :span="13"
+                :offset="1">
           <el-form-item label="简介">
-            <el-input v-model="description" placeholder="文章简介"></el-input>
+            <el-input v-model="description"
+                      placeholder="文章简介"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
-      <mavon-editor v-model="post.content" ref=md />
+      <mavon-editor v-model="post.content"
+                    ref=md />
     </el-form>
   </div>
 </template>
@@ -36,7 +54,7 @@
 import { giteeApi } from '@/utils/gitee-api'
 
 export default {
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     switch (to.params.action) {
       case 'add':
         document.title = `${to.meta.title}-创建`
@@ -49,7 +67,7 @@ export default {
     }
     next()
   },
-  data() {
+  data () {
     return {
       path: this.$route.query.path,
       action: this.$route.params.action,
@@ -61,13 +79,13 @@ export default {
       description: this.$route.query.description || '',
     }
   },
-  mounted() {
+  mounted () {
     this.getPost(this.path)
     this.getPostList()
     this.getCategory()
   },
   methods: {
-    async getPost(path) {
+    async getPost (path) {
       if (!path) return
       const file = await giteeApi.getFile(path)
       if (!file) {
@@ -76,7 +94,7 @@ export default {
       }
       this.post = file
     },
-    async getPostList() {
+    async getPostList () {
       const file = await giteeApi.getFile(`db/_post/postList.json`)
       if (!file) {
         this.$message.error('No data')
@@ -87,7 +105,7 @@ export default {
       this.postList.path = file.path
       this.postList.sha = file.sha
     },
-    async getCategory() {
+    async getCategory () {
       const file = await giteeApi.getFile('db/_post/category.json')
       if (!file) {
         this.$message.error('No data')
@@ -95,7 +113,7 @@ export default {
       }
       this.categories = JSON.parse(file.content).data
     },
-    async savePost() {
+    async savePost () {
       if (this.action == 'edit') {
         this.updatePost()
         return
@@ -110,7 +128,7 @@ export default {
         path: `db/_post/list/${this.name}.md`,
         description: this.description,
         category: this.category,
-        author: 'Ronnie Zhang',
+        author: 'Sally Zhang',
         cover: "",
         date: new Date()
       })
@@ -122,7 +140,7 @@ export default {
       this.$message(res2.msg)
       this.$router.push('/admin/list')
     },
-    async updatePost() {
+    async updatePost () {
       const res = await giteeApi.updateFile(`db/_post/list/${this.name}.md`, this.post.sha, this.post.content)
       if (res.status !== 'OK') {
         this.$message.error(res.msg)
@@ -136,7 +154,7 @@ export default {
             name: this.name,
             description: this.description,
             category: this.category,
-            author: 'Ronnie Zhang',
+            author: 'Sally Zhang',
             cover: "",
             date: new Date()
           }

@@ -1,22 +1,22 @@
 module.exports = {
   // 页面title
-  title: '奇思笔记',
+  title: '三年开发经验',
   // 发布pages的仓库名（博客部署文件存放的仓库名）
   pagesRepo: 'gitee-blog',
   // 网站配置信息
   siteOptions: {
-    title: '奇思笔记',
-    subtitle: '孤光自照，肝胆皆冰雪',
-    author: '张传龙',
-    description: '痴迷于前端的全栈工程师',
-    github: 'https://github.com/zclzone',
+    title: '三年开发经验',
+    subtitle: '厕所开发',
+    author: '卑微小张',
+    description: '可怜.jpg',
+    github: 'https://github.com/zff-programmer',
     navMenu: {
       '/index': '首页',
       '/article': '文章',
       '/works': '作品',
       '/article/关于本站': '关于本站'
     },
-    skills: ['Vue', 'React', 'JavaScript', 'Css', 'Java', 'C#', 'MySql', 'Sql Server', 'MongoDB'],
+    skills: ['JavaScript', 'Css', 'C#', 'Sql Server'],
   },
   // 评论配置信息
   commentOptions: {
@@ -35,7 +35,7 @@ module.exports = {
   // gitee api
   giteeApiOptions: {
     baseApiURL: 'https://gitee.com/api/v5',
-    owner: 'zclzone',
+    owner: 'Sally-Zhang',
     repo: 'gitee-blog-db'
   }
 }
